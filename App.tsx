@@ -1,12 +1,12 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableNativeFeedback,
-} from "react-native";
+import {NavigationContainer} from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import List from './components/List';
+
+
 export default function App() {
+
+  const Tab = createBottomTabNavigator();
+
   const array = [
     {
       title: "Malibu",
@@ -23,34 +23,14 @@ export default function App() {
       description: "Regardez comme c'est beau !",
     },
   ];
-  return (
-    <View style={styles.container}>
-      {array.map((e) => {
-        return (
-          <View key={e.title}>
-            <TouchableNativeFeedback onPress={() => console.log("pressed")}>
-              <Image
-                source={{
-                  width: 200,
-                  height: 300,
-                  uri: e.image,
-                }}
-              />
-            </TouchableNativeFeedback>
-            <Text>{e.title}</Text>
-          </View>
-        );
-      })}
 
-      <StatusBar style="auto" />
-    </View>
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Liste" component={() => <List data={array}/>} />
+    </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+
+
