@@ -7,29 +7,25 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-interface Props {
-  title: string[];
-  image: string[];
+export interface Spot {
+  title: string;
+  image: string;
+  type: "surf" | "wave" | "person";
 }
 
-export default function List({ title, image }: Props) {
+interface Props {
+  items: Spot[];
+}
+
+export default function List({ items }: Props) {
   return (
     <View style={styles.container}>
-      {title.map((e, i) => {
-        console.log(e, i);
-        return (
-          <View key={i}>
-            <Text>{e}</Text>
-            {image.map((el, ind) =>
-              i === ind ? (
-                <Image source={{ width: 100, height: 150, uri: el }} />
-              ) : (
-                <></>
-              )
-            )}
-          </View>
-        );
-      })}
+      {items.map((e, i) => (
+        <View key={i}>
+          <Text>{e.title}</Text>
+          <Image source={{ width: 100, height: 150, uri: e.image }} />
+        </View>
+      ))}
 
       <StatusBar style="auto" />
     </View>
