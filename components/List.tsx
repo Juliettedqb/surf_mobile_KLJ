@@ -1,10 +1,4 @@
-import {
-  Text,
-  View,
-  Image,
-  TouchableNativeFeedback,
-  StyleSheet,
-} from "react-native";
+import { Text, View, Image, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 export interface Spot {
@@ -13,16 +7,23 @@ export interface Spot {
   type: "surf" | "wave" | "person";
 }
 
-interface Props {
+interface ListProps {
   items: Spot[];
+  onClick: (spot: Spot) => void;
 }
 
-export default function List({ items }: Props) {
+export default function List({ items, onClick }: ListProps) {
   return (
     <View style={styles.container}>
       {items.map((e, i) => (
         <View key={i}>
-          <Text>{e.title}</Text>
+          <Text
+            onPress={() => {
+              onClick(e);
+            }}
+          >
+            {e.title}
+          </Text>
           <Image source={{ width: 100, height: 150, uri: e.image }} />
         </View>
       ))}
