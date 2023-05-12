@@ -8,13 +8,19 @@ export default function App() {
       title: "Malibu Baby !",
       image:
         "https://tahesport.com/media/catalog/product/cache/d96fc7b71f34502139701fbc9e1b3b74/m/i/mini-malibu-right.jpg",
-      type: "person",
+      surfBreak: "wave break",
+      country: "US",
+      difficulty: 3,
+      moreInformation: "",
     },
     {
       title: "Hossegor Baby !",
       image:
         "https://oceanadventure.surf/wp-content/uploads/2019/11/cedric-oa.jpg",
-      type: "wave",
+      surfBreak: "point break",
+      country: "France",
+      difficulty: 2,
+      moreInformation: "",
     },
   ];
 

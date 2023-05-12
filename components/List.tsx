@@ -4,7 +4,10 @@ import { StatusBar } from "expo-status-bar";
 export interface Spot {
   title: string;
   image: string;
-  type: "surf" | "wave" | "person";
+  surfBreak: string;
+  country: string;
+  difficulty: number;
+  moreInformation: string;
 }
 
 interface ListProps {
