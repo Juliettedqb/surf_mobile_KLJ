@@ -27,7 +27,6 @@ export default function List({ items, onClick }: ListProps) {
           >
             {e.title}
           </Text>
-          <Image source={{ width: 100, height: 150, uri: e.image }} />
         </View>
       ))}
 
