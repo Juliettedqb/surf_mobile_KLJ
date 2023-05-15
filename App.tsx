@@ -1,12 +1,15 @@
 import Detail from "./components/Detail";
 import List, { Spot } from "./components/List";
 import React, { useState } from "react";
-import {Api} from './ApiController'
+import { Api } from "./ApiController";
 
 export default function App() {
+  const data = Api();
 
-  Api();
-  
+  // for (let i = 0; i < data.length; i++) {
+  //   console.log("data retrieved", data[i]["_rawJson"]["fields"]["Address"]);
+  // }
+
   const array: Spot[] = [
     {
       title: "Malibu Baby !",
@@ -34,7 +37,6 @@ export default function App() {
 
   return (
     <>
-
       {selectedSpot ? (
         <Detail onClick={() => setSelectedSpot(null)} item={selectedSpot} />
       ) : (
