@@ -1,8 +1,12 @@
 import Detail from "./components/Detail";
 import List, { Spot } from "./components/List";
 import React, { useState } from "react";
+import {Api} from './ApiController'
 
 export default function App() {
+
+  Api();
+  
   const array: Spot[] = [
     {
       title: "Malibu Baby !",
@@ -30,6 +34,7 @@ export default function App() {
 
   return (
     <>
+
       {selectedSpot ? (
         <Detail onClick={() => setSelectedSpot(null)} item={selectedSpot} />
       ) : (
