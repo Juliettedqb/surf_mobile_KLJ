@@ -5,10 +5,13 @@ import { Api } from "./ApiController";
 
 export default function App() {
   const data = Api();
+  const fields = [];
 
-  // for (let i = 0; i < data.length; i++) {
-  //   console.log("data retrieved", data[i]["_rawJson"]["fields"]["Address"]);
-  // }
+  for (let i = 0; i < data.length; i++) {
+    fields.push(data[i]["_rawJson"]["fields"]);
+  }
+
+  console.log("fields", fields);
 
   const array: Spot[] = [
     {
