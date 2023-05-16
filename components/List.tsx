@@ -1,18 +1,23 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-export interface Spot {
-  title: string;
-  image: string;
-  surfBreak: string;
-  country: string;
-  difficulty: number;
-  moreInformation: string;
+export interface SurfData {
+  Address: string;
+  Destination: string;
+  "Destination State/Country": string;
+  "Difficulty Level": number;
+  Geocode: string;
+  Influencers: string[];
+  "Magic Seaweed Link": string;
+  "Peak Surf Season Begins": string;
+  "Peak Surf Season Ends": string;
+  Photos: any[];
+  "Surf Break": string[];
 }
 
 interface ListProps {
-  items: Spot[];
-  onClick: (spot: Spot) => void;
+  items: SurfData[];
+  onClick: (spot: SurfData) => void;
 }
 
 export default function List({ items, onClick }: ListProps) {
@@ -25,7 +30,7 @@ export default function List({ items, onClick }: ListProps) {
               onClick(e);
             }}
           >
-            {e.title}
+            {e.Destination}
           </Text>
         </View>
       ))}
