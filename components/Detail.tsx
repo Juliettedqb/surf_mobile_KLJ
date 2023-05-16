@@ -1,5 +1,6 @@
 import { Text, View, Image, StyleSheet, Button } from "react-native";
 import { SurfData } from "./List";
+import { ConversionUtils } from "turbocommons-ts";
 
 interface DetailProps {
   item: SurfData;
@@ -15,11 +16,21 @@ const styles = StyleSheet.create({
   },
 });
 
+const convertToCoordinates = (base64Code: string) => {
+  const geoCodeString = ConversionUtils.base64ToString(base64Code);
+  const coordinates: string = `longitude : ${
+    JSON.parse(geoCodeString).o.lng
+  } , latitude : ${JSON.parse(geoCodeString).o.lat}`;
+  return coordinates;
+};
+
 const Detail = ({ item, onClick }: DetailProps) => {
   return (
     <View style={styles.container}>
       <Text>
         Spot : {item.Address} ({item["Destination State/Country"]}){"\n"}
+        GeoCode : {convertToCoordinates(item.Geocode)}
+        {"\n"}
         Surf break : {item["Surf Break"]}
         {"\n"}
         Difficulty level : {item["Difficulty Level"]}

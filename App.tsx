@@ -11,8 +11,6 @@ export default function App() {
     fields.push(data[i]["_rawJson"]["fields"]);
   }
 
-  console.log(fields[0]);
-
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
 
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
