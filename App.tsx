@@ -2,8 +2,23 @@ import Detail from "./components/Detail";
 import List, { SurfData } from "./components/List";
 import React, { useState } from "react";
 import { Api } from "./ApiController";
+import * as Location from "expo-location";
 
 export default function App() {
+  const getLocationAsync = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      // Handle permission denied
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    let latitude = location.coords.latitude;
+    let longitude = location.coords.longitude;
+    console.log(location);
+  };
+
+  getLocationAsync();
+
   const data = Api();
   const fields: SurfData[] = [];
 
