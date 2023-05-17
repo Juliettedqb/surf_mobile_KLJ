@@ -6,6 +6,8 @@ import { convertToCoordinates } from "./utils/convertToCoordinates";
 import { getUserLocation } from "./utils/getLocation";
 import { calculateDistance } from "./utils/calculateDistance";
 import { Button, Text } from "react-native";
+import SurfHeader from "./components/SurfHeader";
+import SurfFooter from "./components/SurfFooter";
 
 export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
@@ -56,6 +58,7 @@ export default function App() {
 
   return (
     <>
+      <SurfHeader />
       {selectedSpot ? (
         <Detail onClick={() => setSelectedSpot(null)} item={selectedSpot} />
       ) : (
@@ -68,6 +71,7 @@ export default function App() {
       )}
 
       <Button title="find nearest surf spot" onPress={handleButtonPress} />
+      {/* <SurfFooter /> */}
     </>
   );
 }
