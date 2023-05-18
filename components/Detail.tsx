@@ -16,11 +16,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const convertToCoordinates = (base64Code: string) => {
+export const convertToCoordinates = (base64Code: string) => {
   const geoCodeString = ConversionUtils.base64ToString(base64Code);
   const coordinates: string = `longitude : ${
     JSON.parse(geoCodeString).o.lng
   } , latitude : ${JSON.parse(geoCodeString).o.lat}`;
+
   return coordinates;
 };
 
