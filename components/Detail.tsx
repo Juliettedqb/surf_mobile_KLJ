@@ -22,6 +22,7 @@ export const convertToCoordinates = (base64Code: string) => {
     JSON.parse(geoCodeString).o.lng
   } , latitude : ${JSON.parse(geoCodeString).o.lat}`;
 
+  console.log(coordinates)
   return coordinates;
 };
 
