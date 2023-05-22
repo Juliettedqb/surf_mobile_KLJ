@@ -5,20 +5,23 @@ import { Api } from "./ApiController";
 import { convertToCoordinates } from "./utils/convertToCoordinates";
 import { getUserLocation } from "./utils/getLocation";
 import { calculateDistance } from "./utils/calculateDistance";
-import { Button, Text } from "react-native";
+import { Text } from "react-native";
+import SurfHeader from "./components/SurfHeader";
+import SurfFooter from "./components/SurfFooter";
 
 export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
   const [minDistance, setMinDistance] = useState<any>("");
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
-  const data = Api();
-  const fields: SurfData[] = data.map((item) => item._rawJson.fields);
+  const fields: SurfData[] = Api();
+
+  console.log(fields);
 
   const surfItems = fields.map((surfData) =>
-    convertToCoordinates(surfData.Geocode)
+    convertToCoordinates(surfData.geoCode)
   );
 
-  const handleButtonPress = async () => {
+  const findNearestSpot = async () => {
     try {
       const userLocation = await getUserLocation();
 
@@ -56,10 +59,15 @@ export default function App() {
 
   return (
     <>
+      <SurfHeader />
       {selectedSpot ? (
         <Detail onClick={() => setSelectedSpot(null)} item={selectedSpot} />
       ) : (
-        <List onClick={changeSelectedSpot} items={fields} />
+        <List
+          onClick={changeSelectedSpot}
+          items={fields}
+          handleButtonPress={findNearestSpot}
+        />
       )}
       {minDistance ? (
         <Text>Nearest surf spot : {minDistance}</Text>
@@ -67,7 +75,8 @@ export default function App() {
         <Text></Text>
       )}
 
-      <Button title="find nearest surf spot" onPress={handleButtonPress} />
+      {/* <Button title="find nearest surf spot" onPress={findNearestSpot} /> */}
+      {/* <SurfFooter /> */}
     </>
   );
 }
