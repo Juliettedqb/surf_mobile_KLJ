@@ -30,14 +30,14 @@ const Detail = ({ item, onClick }: DetailProps) => {
   return (
     <View style={styles.container}>
       <Text>
-        Spot : {item.Address} ({item["Destination State/Country"]}){"\n"}
-        GeoCode : {convertToCoordinates(item.Geocode)}
+        Spot : {item.address} ({item["destinationRegion"]}){"\n"}
+        GeoCode : {convertToCoordinates(item.geoCode)}
         {"\n"}
-        Surf break : {item["Surf Break"]}
+        Surf break : {item["surfBreak"]}
         {"\n"}
-        Difficulty level : {item["Difficulty Level"]}
+        Difficulty level : {item["difficultyLevel"]}
       </Text>
-      <Image source={{ width: 100, height: 150, uri: item.Photos[0].url }} />
+      <Image source={{ width: 100, height: 150, uri: item.photos[0].url }} />
       <Button title="Go back to listing" onPress={onClick}></Button>
     </View>
   );

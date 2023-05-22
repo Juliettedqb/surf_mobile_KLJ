@@ -2,25 +2,26 @@ import { Text, View, Image, StyleSheet, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 export interface SurfData {
-  Address: string;
-  Destination: string;
-  "Destination State/Country": string;
-  "Difficulty Level": number;
-  Geocode: string;
-  Influencers: string[];
-  "Magic Seaweed Link": string;
-  "Peak Surf Season Begins": string;
-  "Peak Surf Season Ends": string;
-  Photos: any[];
-  "Surf Break": string[];
+  address: string;
+  destination: string;
+  destinationRegion: string;
+  difficultyLevel: number;
+  geoCode: string;
+  influencers: string[];
+  magicSeaweedLink: string;
+  seasonStart: string;
+  seasonEnd: string;
+  photos: any[];
+  surfBreak: string[];
 }
 
 interface ListProps {
   items: SurfData[];
   onClick: (spot: SurfData) => void;
+  handleButtonPress: () => void;
 }
 
-export default function List({ items, onClick }: ListProps) {
+export default function List({ items, onClick, handleButtonPress }: ListProps) {
   return (
     <View style={styles.container}>
       <Image
@@ -48,12 +49,12 @@ export default function List({ items, onClick }: ListProps) {
               onClick(e);
             }}
           >
-            {e.Destination}
+            {e.destination}
           </Text>
         </View>
       ))}
       <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={handleButtonPress}>
           <Text style={{ color: "white" }}>Find nearest spot</Text>
         </Pressable>
         <Pressable style={styles.button}>
