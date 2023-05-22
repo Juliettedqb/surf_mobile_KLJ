@@ -14,6 +14,6 @@ export const getUserLocation = async () => {
     const location = await Location.getCurrentPositionAsync({});
     const latitude = location.coords.latitude;
     const longitude = location.coords.longitude;
-    return{latitude, longitude}
+    return {latitude, longitude}
     
   };

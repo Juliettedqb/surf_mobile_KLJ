@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Api } from "./ApiController";
 import { convertToCoordinates } from "./utils/convertToCoordinates";
 import { getUserLocation } from "./utils/getLocation";
+import { calculateDistance } from "./utils/calculateDistance";
 
 export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
@@ -16,8 +17,28 @@ export default function App() {
   );
 
   getUserLocation().then((userLocation) => {
-    //Map through surf items to determine each of their distances from user's location
-    //take the min length
+    const surfDistances = surfItems.map((item, i) => [
+      calculateDistance(
+        userLocation?.latitude,
+        item?.latitude,
+        userLocation?.longitude,
+        item?.longitude
+      ),
+      i,
+    ]);
+
+    let smallestSumElement = null;
+    let smallestSum = Infinity;
+
+    for (let i = 0; i < surfDistances.length; i++) {
+      const currentSum = surfDistances[i][0] + surfDistances[i][1];
+      if (currentSum < smallestSum) {
+        smallestSum = currentSum;
+        smallestSumElement = surfDistances[i];
+      }
+    }
+
+    console.log("min surfDistance element", smallestSumElement);
   });
 
   return (
