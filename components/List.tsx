@@ -26,9 +26,11 @@ export default function List({ items, onClick, handleButtonPress }: ListProps) {
     <View style={styles.container}>
       <Image
         source={{
-          width: 395,
-          height: 180,
           uri: "https://media.gqmagazine.fr/photos/5b990d30930b710011049152/16:9/w_2560%2Cc_limit/nicolas_cage_va_mettre_fin____sa_carri__re_d___acteur_7117.jpeg",
+        }}
+        style={{
+          width: "100%",
+          height: 180,
         }}
       />
       <Text
