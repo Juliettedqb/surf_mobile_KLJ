@@ -8,6 +8,7 @@ import { calculateDistance } from "./utils/calculateDistance";
 import { Text } from "react-native";
 import SurfHeader from "./components/SurfHeader";
 import SurfFooter from "./components/SurfFooter";
+import { getAllSurfSpot } from "./utils/newApiController";
 
 export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
@@ -15,7 +16,16 @@ export default function App() {
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
   const fields: SurfData[] = Api();
 
-  console.log(fields);
+  async function fetchData() {
+    try {
+      const surfSpots = await getAllSurfSpot();
+      console.log(surfSpots);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+
+  fetchData();
 
   const surfItems = fields.map((surfData) =>
     convertToCoordinates(surfData.geoCode)
