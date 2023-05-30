@@ -21,7 +21,6 @@ const convertToCoordinates = (base64Code: string) => {
   return [longNumber, latNumber];
 };
 
-
 const Detail = ({ item, onClick }: DetailProps) => {
   return (
     <SafeAreaProvider>
@@ -31,37 +30,37 @@ const Detail = ({ item, onClick }: DetailProps) => {
       </Appbar.Header>
 
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: item.photos[0].url }} />
+        <Image style={styles.image} source={{ uri: item.Photos[0] }} />
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
             <Text style={styles.title}>
-              {item.destination}
+              {item.Destination}
               {"\n"}
             </Text>
             <Text style={styles.text}>
-              Location : {item["address"]}.{"\n"}
-              Surf break : {item["surfBreak"]}.{"\n"}
-              Difficulty level : {item["difficultyLevel"]}.
+              Location : {item.Address}.{"\n"}
+              Surf break : {item.SurfBreak}.{"\n"}
+              Difficulty level : {item.DifficultyLevel}.
             </Text>
           </Card.Content>
         </Card>
-          <MapView
-            style={styles.map}
-            region={{
+        {/* <MapView
+          style={styles.map}
+          region={{
+            latitude: convertToCoordinates(item.geoCode)[1],
+            longitude: convertToCoordinates(item.geoCode)[0],
+            latitudeDelta: 20,
+            longitudeDelta: 20,
+          }}
+        >
+          <Marker
+            coordinate={{
               latitude: convertToCoordinates(item.geoCode)[1],
               longitude: convertToCoordinates(item.geoCode)[0],
-              latitudeDelta: 20,
-              longitudeDelta: 20,
             }}
-          >
-            <Marker
-              coordinate={{
-                latitude: convertToCoordinates(item.geoCode)[1],
-                longitude: convertToCoordinates(item.geoCode)[0],
-              }}
-            />
-          </MapView>
-        </View>
+          />
+        </MapView> */}
+      </View>
     </SafeAreaProvider>
   );
 };
