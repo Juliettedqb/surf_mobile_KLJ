@@ -16,28 +16,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const convertToCoordinates = (base64Code: string) => {
-  const geoCodeString = ConversionUtils.base64ToString(base64Code);
-  const coordinates: string = `longitude : ${
-    JSON.parse(geoCodeString).o.lng
-  } , latitude : ${JSON.parse(geoCodeString).o.lat}`;
+// const convertToCoordinates = (base64Code: string) => {
+//   const geoCodeString = ConversionUtils.base64ToString(base64Code);
+//   const coordinates: string = `longitude : ${
+//     JSON.parse(geoCodeString).o.lng
+//   } , latitude : ${JSON.parse(geoCodeString).o.lat}`;
 
-  console.log(coordinates);
-  return coordinates;
-};
+//   console.log(coordinates);
+//   return coordinates;
+// };
 
 const Detail = ({ item, onClick }: DetailProps) => {
   return (
     <View style={styles.container}>
       <Text>
-        Spot : {item.address} ({item["destinationRegion"]}){"\n"}
-        GeoCode : {convertToCoordinates(item.geoCode)}
+        Spot : {item.Address} ({item.Destination}){"\n"}
+        {/* GeoCode : {convertToCoordinates(item.geoCode)} */}
         {"\n"}
-        Surf break : {item["surfBreak"]}
+        Surf break : {item.SurfBreak}
         {"\n"}
-        Difficulty level : {item["difficultyLevel"]}
+        Difficulty level : {item.DifficultyLevel}
       </Text>
-      <Image source={{ width: 100, height: 150, uri: item.photos[0].url }} />
+      <Image source={{ width: 100, height: 150, uri: item.Photos[0] }} />
       <Button title="Go back to listing" onPress={onClick}></Button>
     </View>
   );
