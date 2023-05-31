@@ -43,14 +43,14 @@ export default function List({ items, onClick, handleButtonPress }: ListProps) {
           </Text>
         </View>
       ))}
-      {/* <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
+      <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
         <Pressable style={styles.button} onPress={handleButtonPress}>
           <Text style={styles.colorTextButton}>Find nearest spot</Text>
         </Pressable>
         <Pressable style={styles.button}>
           <Text style={styles.colorTextButton}>Add new spot</Text>
         </Pressable>
-      </View> */}
+      </View>
       <StatusBar style="auto" />
     </View>
   );

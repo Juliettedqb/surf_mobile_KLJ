@@ -16,19 +16,6 @@ export default function App() {
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
   const fields: SurfData[] = Api();
 
-  console.log(fields);
-
-  async function fetchData() {
-    try {
-      const surfSpots = await getAllSurfSpot();
-      console.log(surfSpots);
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  }
-
-  fetchData();
-
   const surfItems = fields.map((surfData) =>
     convertToCoordinates(surfData.geoCode)
   );
