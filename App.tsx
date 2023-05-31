@@ -7,8 +7,14 @@ import { getUserLocation } from "./utils/getLocation";
 import { calculateDistance } from "./utils/calculateDistance";
 import SurfHeader from "./components/SurfHeader";
 
+enum Page {
+  HOME,
+  FORM,
+}
+
 export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
+  const [currentPage, setCurrentPage] = useState<Page>(Page.HOME);
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
   const fields: SurfData[] = Api();
 
@@ -33,7 +39,7 @@ export default function App() {
         };
       });
 
-      console.log("distances", surfDistances);
+      //console.log("distances", surfDistances);
 
       let smallestSumElement = null;
       let smallestSum = Infinity;
