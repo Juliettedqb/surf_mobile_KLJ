@@ -10,10 +10,15 @@ import SurfHeader from "./components/SurfHeader";
 import SurfFooter from "./components/SurfFooter";
 import AddNewSpot from "./components/AddNewSpot";
 
+enum Page {
+  HOME,
+  FORM,
+}
+
 export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
   const [minDistance, setMinDistance] = useState<any>("");
-  const [showForm, setShowForm] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<Page>(Page.HOME);
 
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
   const fields: SurfData[] = Api();
@@ -59,7 +64,7 @@ export default function App() {
   };
 
   const displayForm = () => {
-    setShowForm(true);
+    setCurrentPage(Page.FORM);
   };
 
   const handleNewSpotSubmit = (
@@ -70,27 +75,32 @@ export default function App() {
     console.log("New spot submitted:", address, photo, geocode);
   };
 
+  const HomePage = () => {
+    return (
+      <>
+        <SurfHeader />
+        {selectedSpot ? (
+          <Detail onClick={() => setSelectedSpot(null)} item={selectedSpot} />
+        ) : (
+          <List
+            onClick={changeSelectedSpot}
+            items={fields}
+            handleButtonPress={findNearestSpot}
+            handleAddButton={displayForm}
+          />
+        )}
+      </>
+    );
+  };
+
+  const FormPage = () => {
+    return <AddNewSpot onSubmit={handleNewSpotSubmit} />;
+  };
+
   return (
     <>
-      <SurfHeader />
-      {selectedSpot ? (
-        <Detail onClick={() => setSelectedSpot(null)} item={selectedSpot} />
-      ) : (
-        <List
-          onClick={changeSelectedSpot}
-          items={fields}
-          handleButtonPress={findNearestSpot}
-          handleAddButton={displayForm}
-        />
-      )}
-
-      {minDistance ? (
-        <Text>Nearest surf spot: {minDistance}</Text>
-      ) : (
-        <Text></Text>
-      )}
-
-      {showForm && <AddNewSpot onSubmit={handleNewSpotSubmit} />}
+      {currentPage === Page.HOME && <HomePage />}
+      {currentPage === Page.FORM && <FormPage />}
     </>
   );
 }
