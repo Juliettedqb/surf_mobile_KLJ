@@ -19,9 +19,15 @@ interface ListProps {
   items: SurfData[];
   onClick: (spot: SurfData) => void;
   handleButtonPress: () => void;
+  handleAddButton: () => void;
 }
 
-export default function List({ items, onClick, handleButtonPress }: ListProps) {
+export default function List({
+  items,
+  onClick,
+  handleButtonPress,
+  handleAddButton,
+}: ListProps) {
   return (
     <View style={styles.container}>
       <Image
@@ -57,7 +63,7 @@ export default function List({ items, onClick, handleButtonPress }: ListProps) {
         <Pressable style={styles.button} onPress={handleButtonPress}>
           <Text style={{ color: "white" }}>Find nearest spot</Text>
         </Pressable>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={handleAddButton}>
           <Text style={{ color: "white" }}>Add new spot</Text>
         </Pressable>
       </View>

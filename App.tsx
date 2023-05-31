@@ -5,17 +5,18 @@ import { Api } from "./ApiController";
 import { convertToCoordinates } from "./utils/convertToCoordinates";
 import { getUserLocation } from "./utils/getLocation";
 import { calculateDistance } from "./utils/calculateDistance";
-import { Text } from "react-native";
+import { Text, Pressable } from "react-native";
 import SurfHeader from "./components/SurfHeader";
 import SurfFooter from "./components/SurfFooter";
+import AddNewSpot from "./components/AddNewSpot";
 
 export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
   const [minDistance, setMinDistance] = useState<any>("");
+  const [showForm, setShowForm] = useState<boolean>(false);
+
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
   const fields: SurfData[] = Api();
-
-  console.log(fields);
 
   const surfItems = fields.map((surfData) =>
     convertToCoordinates(surfData.geoCode)
@@ -57,6 +58,18 @@ export default function App() {
     }
   };
 
+  const displayForm = () => {
+    setShowForm(true);
+  };
+
+  const handleNewSpotSubmit = (
+    address: string,
+    photo: string,
+    geocode: string
+  ) => {
+    console.log("New spot submitted:", address, photo, geocode);
+  };
+
   return (
     <>
       <SurfHeader />
@@ -67,16 +80,17 @@ export default function App() {
           onClick={changeSelectedSpot}
           items={fields}
           handleButtonPress={findNearestSpot}
+          handleAddButton={displayForm}
         />
       )}
+
       {minDistance ? (
-        <Text>Nearest surf spot : {minDistance}</Text>
+        <Text>Nearest surf spot: {minDistance}</Text>
       ) : (
         <Text></Text>
       )}
 
-      {/* <Button title="find nearest surf spot" onPress={findNearestSpot} /> */}
-      {/* <SurfFooter /> */}
+      {showForm && <AddNewSpot onSubmit={handleNewSpotSubmit} />}
     </>
   );
 }
