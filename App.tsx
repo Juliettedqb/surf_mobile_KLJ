@@ -5,34 +5,31 @@ import { Api } from "./ApiController";
 import { convertToCoordinates } from "./utils/convertToCoordinates";
 import { getUserLocation } from "./utils/getLocation";
 import { calculateDistance } from "./utils/calculateDistance";
-import { Text } from "react-native";
 import SurfHeader from "./components/SurfHeader";
-import SurfFooter from "./components/SurfFooter";
-import { getAllSurfSpot } from "./utils/newApiController";
 
 export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
-  const [minDistance, setMinDistance] = useState<any>("");
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
   const fields: SurfData[] = Api();
 
-  const surfItems = fields.map((surfData) =>
-    convertToCoordinates(surfData.geoCode)
-  );
+  const surfItems = fields.map((surfData) => ({
+    item: surfData,
+    coordinates: convertToCoordinates(surfData.geoCode),
+  }));
 
   const findNearestSpot = async () => {
     try {
       const userLocation = await getUserLocation();
 
-      const surfDistances = surfItems.map((item) => {
+      const surfDistances = surfItems.map(({ item, coordinates }) => {
         return {
           distance: calculateDistance(
             userLocation?.latitude,
-            item?.latitude,
+            coordinates?.latitude,
             userLocation?.longitude,
-            item?.longitude
+            coordinates?.longitude
           ),
-          name: item?.name,
+          item,
         };
       });
 
@@ -49,7 +46,7 @@ export default function App() {
         }
       }
 
-      setMinDistance(smallestSumElement?.name);
+      setSelectedSpot(smallestSumElement?.item!);
       console.log("min surfDistance element", smallestSumElement);
     } catch (error) {
       console.error("Error retrieving user location:", error);
@@ -68,14 +65,6 @@ export default function App() {
           handleButtonPress={findNearestSpot}
         />
       )}
-      {minDistance ? (
-        <Text>Nearest surf spot : {minDistance}</Text>
-      ) : (
-        <Text></Text>
-      )}
-
-      {/* <Button title="find nearest surf spot" onPress={findNearestSpot} /> */}
-      {/* <SurfFooter /> */}
     </>
   );
 }
