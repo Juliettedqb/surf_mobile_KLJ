@@ -4,21 +4,22 @@ import { SurfData } from "./List";
 //  import { ConversionUtils } from "turbocommons-ts";
 import { Appbar, Card, Text } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import MapView, { Marker } from "react-native-maps";
+import { ConversionUtils } from "turbocommons-ts";
 
 interface DetailProps {
   item: SurfData;
   onClick: () => void;
 }
 
-//   const convertToCoordinates = (base64Code: string) => {
-//   const geoCodeString = ConversionUtils.base64ToString(base64Code);
-//   const coordinates: string = `longitude : ${
-//     JSON.parse(geoCodeString).o.lng
-//   } , latitude : ${JSON.parse(geoCodeString).o.lat}`;
-
-//   console.log(coordinates);
-//   return coordinates;
-// };
+const convertToCoordinates = (base64Code: string) => {
+  const geoCodeString = ConversionUtils.base64ToString(base64Code);
+  const longitude = JSON.parse(geoCodeString).o.lng;
+  const latitude = JSON.parse(geoCodeString).o.lat;
+  const longNumber = Number(longitude);
+  const latNumber = Number(latitude);
+  return [longNumber, latNumber];
+};
 
 const Detail = ({ item, onClick }: DetailProps) => {
   return (
@@ -29,10 +30,7 @@ const Detail = ({ item, onClick }: DetailProps) => {
       </Appbar.Header>
 
       <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{ uri: item.photos[0].url }}
-        />
+        <Image style={styles.image} source={{ uri: item.photos[0].url }} />
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
             <Text style={styles.title}>
@@ -40,13 +38,29 @@ const Detail = ({ item, onClick }: DetailProps) => {
               {"\n"}
             </Text>
             <Text style={styles.text}>
-              {/* GeoCode : {convertToCoordinates(item.geoCode)}.{"\n"} */}
               Location : {item["address"]}.{"\n"}
               Surf break : {item["surfBreak"]}.{"\n"}
               Difficulty level : {item["difficultyLevel"]}.
             </Text>
           </Card.Content>
         </Card>
+        <MapView
+          style={styles.map}
+          region={{
+            latitude: convertToCoordinates(item.geoCode)[1],
+            longitude: convertToCoordinates(item.geoCode)[0],
+            latitudeDelta: 20,
+            longitudeDelta: 20,
+          }}
+        >
+          <Marker
+            coordinate={{
+              latitude: convertToCoordinates(item.geoCode)[1],
+              longitude: convertToCoordinates(item.geoCode)[0],
+            }}
+            title={item.address}
+          />
+        </MapView>
       </View>
     </SafeAreaProvider>
   );
@@ -61,18 +75,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    width: "100%", 
-    height: 300,
+    width: "100%",
+    height: 230,
   },
   card: {
     width: "100%",
-    height: 250,
+    height: 200,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    top: 250,
-    padding: 10,
+    top: 200,
+    padding: 5,
   },
   cardContent: {
     minWidth: 350,
@@ -85,5 +99,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     lineHeight: 30,
+  },
+  map: {
+    width: "100%",
+    height: 200,
+    top: 160,
   },
 });

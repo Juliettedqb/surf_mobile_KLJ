@@ -16,6 +16,8 @@ export default function App() {
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
   const fields: SurfData[] = Api();
 
+  console.log(fields);
+
   async function fetchData() {
     try {
       const surfSpots = await getAllSurfSpot();
