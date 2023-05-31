@@ -6,6 +6,7 @@ import { convertToCoordinates } from "./utils/convertToCoordinates";
 import { getUserLocation } from "./utils/getLocation";
 import { calculateDistance } from "./utils/calculateDistance";
 import SurfHeader from "./components/SurfHeader";
+import AddNewSpot from "./components/AddNewSpot";
 
 enum Page {
   HOME,
@@ -59,18 +60,44 @@ export default function App() {
     }
   };
 
+  const displayForm = () => {
+    setCurrentPage(Page.FORM);
+  };
+
+  const handleNewSpotSubmit = (
+    address: string,
+    photo: string,
+    geocode: string
+  ) => {
+    console.log("New spot submitted:", address, photo, geocode);
+  };
+
+  const HomePage = () => {
+    return (
+      <>
+        <SurfHeader />
+        {selectedSpot ? (
+          <Detail onClick={() => setSelectedSpot(null)} item={selectedSpot} />
+        ) : (
+          <List
+            onClick={changeSelectedSpot}
+            items={fields}
+            handleButtonPress={findNearestSpot}
+            handleAddButton={displayForm}
+          />
+        )}
+      </>
+    );
+  };
+
+  const FormPage = () => {
+    return <AddNewSpot onSubmit={handleNewSpotSubmit} />;
+  };
+
   return (
     <>
-      <SurfHeader />
-      {selectedSpot ? (
-        <Detail onClick={() => setSelectedSpot(null)} item={selectedSpot} />
-      ) : (
-        <List
-          onClick={changeSelectedSpot}
-          items={fields}
-          handleButtonPress={findNearestSpot}
-        />
-      )}
+      {currentPage === Page.HOME && <HomePage />}
+      {currentPage === Page.FORM && <FormPage />}
     </>
   );
 }
