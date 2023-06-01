@@ -70,6 +70,7 @@ export default function App() {
     geocode: string
   ) => {
     console.log("New spot submitted:", address, photo, geocode);
+    setCurrentPage(Page.HOME)
   };
 
   const HomePage = () => {

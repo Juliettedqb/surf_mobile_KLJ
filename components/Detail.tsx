@@ -4,7 +4,7 @@ import { SurfData } from "./List";
 //  import { ConversionUtils } from "turbocommons-ts";
 import { Appbar, Card, Text } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import { ConversionUtils } from "turbocommons-ts";
 
 interface DetailProps {
@@ -20,6 +20,7 @@ const convertToCoordinates = (base64Code: string) => {
   const latNumber = Number(latitude);
   return [longNumber, latNumber];
 };
+
 
 const Detail = ({ item, onClick }: DetailProps) => {
   return (
@@ -44,24 +45,23 @@ const Detail = ({ item, onClick }: DetailProps) => {
             </Text>
           </Card.Content>
         </Card>
-        <MapView
-          style={styles.map}
-          region={{
-            latitude: convertToCoordinates(item.geoCode)[1],
-            longitude: convertToCoordinates(item.geoCode)[0],
-            latitudeDelta: 20,
-            longitudeDelta: 20,
-          }}
-        >
-          <Marker
-            coordinate={{
+          <MapView
+            style={styles.map}
+            region={{
               latitude: convertToCoordinates(item.geoCode)[1],
               longitude: convertToCoordinates(item.geoCode)[0],
+              latitudeDelta: 20,
+              longitudeDelta: 20,
             }}
-            title={item.address}
-          />
-        </MapView>
-      </View>
+          >
+            <Marker
+              coordinate={{
+                latitude: convertToCoordinates(item.geoCode)[1],
+                longitude: convertToCoordinates(item.geoCode)[0],
+              }}
+            />
+          </MapView>
+        </View>
     </SafeAreaProvider>
   );
 };
