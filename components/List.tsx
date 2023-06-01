@@ -31,19 +31,11 @@ export default function List({
   return (
     <View style={styles.container}>
       <Image
-        source={{
-          width: 395,
-          height: 180,
-          uri: "https://media.gqmagazine.fr/photos/5b990d30930b710011049152/16:9/w_2560%2Cc_limit/nicolas_cage_va_mettre_fin____sa_carri__re_d___acteur_7117.jpeg",
-        }}
+        style={styles.image}
+        source={{ uri: "https://media.gqmagazine.fr/photos/5b990d30930b710011049152/16:9/w_2560%2Cc_limit/nicolas_cage_va_mettre_fin____sa_carri__re_d___acteur_7117.jpeg", }}
       />
       <Text
-        style={{
-          fontSize: 25,
-          fontWeight: "bold",
-          color: "#1C2942",
-          padding: 5,
-        }}
+        style={styles.title}
       >
         Surf Spots
       </Text>
@@ -78,12 +70,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
   },
+  image: {
+    width: "100%",
+    height: 180,
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#1C2942",
+    padding: 5,
+  },
   listElements: {
     backgroundColor: "#4D7092",
     borderWidth: 1,
     borderColor: "white",
     minWidth: 300,
     padding: 5,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   button: {
     backgroundColor: "#1C2942",
