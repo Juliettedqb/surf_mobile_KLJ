@@ -1,25 +1,14 @@
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { SurfData } from "./List";
-//  import { ConversionUtils } from "turbocommons-ts";
 import { Appbar, Card, Text } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MapView, { Marker, Callout } from "react-native-maps";
-import { ConversionUtils } from "turbocommons-ts";
 
 interface DetailProps {
   item: SurfData;
   onClick: () => void;
 }
-
-const convertToCoordinates = (base64Code: string) => {
-  const geoCodeString = ConversionUtils.base64ToString(base64Code);
-  const longitude = JSON.parse(geoCodeString).o.lng;
-  const latitude = JSON.parse(geoCodeString).o.lat;
-  const longNumber = Number(longitude);
-  const latNumber = Number(latitude);
-  return [longNumber, latNumber];
-};
 
 const Detail = ({ item, onClick }: DetailProps) => {
   return (
@@ -44,22 +33,22 @@ const Detail = ({ item, onClick }: DetailProps) => {
             </Text>
           </Card.Content>
         </Card>
-        {/* <MapView
+        <MapView
           style={styles.map}
           region={{
-            latitude: convertToCoordinates(item.geoCode)[1],
-            longitude: convertToCoordinates(item.geoCode)[0],
+            latitude: item.Location.coordinates[1],
+            longitude: item.Location.coordinates[0],
             latitudeDelta: 20,
             longitudeDelta: 20,
           }}
         >
           <Marker
             coordinate={{
-              latitude: convertToCoordinates(item.geoCode)[1],
-              longitude: convertToCoordinates(item.geoCode)[0],
+              latitude: item.Location.coordinates[1],
+              longitude: item.Location.coordinates[0],
             }}
           />
-        </MapView> */}
+        </MapView>
       </View>
     </SafeAreaProvider>
   );

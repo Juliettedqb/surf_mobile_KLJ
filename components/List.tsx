@@ -7,7 +7,7 @@ export interface SurfData {
   DestinationCountry: string;
   DifficultyLevel: number;
   Influencers: string;
-  Location: object;
+  Location: any;
   MagicSeaweedLink: string;
   PeakSurfSeasonBegins: string;
   PeakSurfSeasonEnds: string;
