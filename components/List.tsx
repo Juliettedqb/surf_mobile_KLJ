@@ -11,7 +11,7 @@ export interface SurfData {
   MagicSeaweedLink: string;
   PeakSurfSeasonBegins: string;
   PeakSurfSeasonEnds: string;
-  Photos: string[];
+  Photo: string;
   SurfBreak: string[];
 }
 

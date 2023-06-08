@@ -19,7 +19,7 @@ const Detail = ({ item, onClick }: DetailProps) => {
       </Appbar.Header>
 
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: item.Photos[0] }} />
+        <Image style={styles.image} source={{ uri: item.Photo }} />
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
             <Text style={styles.title}>

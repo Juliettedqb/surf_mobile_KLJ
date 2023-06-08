@@ -5,8 +5,8 @@ import { getUserLocation } from "./utils/getLocation";
 import { calculateDistance } from "./utils/calculateDistance";
 import SurfHeader from "./components/SurfHeader";
 import AddNewSpot from "./components/AddNewSpot";
-import { retrieveAllData } from "./ApiControllerMongo";
-import { createSpot } from "./ApiControllerMongo";
+import { retrieveAllData } from "./ApiController";
+import { createSpot } from "./ApiController";
 import { MouseEvent } from "react";
 
 enum Page {
@@ -67,12 +67,14 @@ export default function App() {
   };
 
   const handleNewSpotSubmit = async (
-    Address: string
+    Address: string,
+    Photo: string,
+    Geocode: string
     // event: MouseEvent<HTMLFormElement>
   ): Promise<void> => {
     try {
       // event.preventDefault();
-      const response = await createSpot(Address);
+      const response = await createSpot(Address, Photo, Geocode);
       console.log("test post route", response);
       setCurrentPage(Page.HOME);
     } catch (error) {

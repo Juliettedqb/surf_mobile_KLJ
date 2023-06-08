@@ -4,18 +4,20 @@ import { MouseEvent } from "react";
 
 interface AddNewSpotProps {
   onSubmit: (
-    Address: string
+    Address: string,
+    Photo: string,
+    Geocode: string
     // event?: React.MouseEvent<HTMLFormElement> | FormEvent<HTMLFormElement>
   ) => Promise<void>;
 }
 
-const AddNewSpot: React.FC<AddNewSpotProps> = ({ onSubmit }) => {
+export default function AddNewSpot({ onSubmit }: AddNewSpotProps) {
   const [Address, setAddress] = useState("");
-  // const [Photo, setPhoto] = useState("");
-  // const [Geocode, setGeocode] = useState("");
+  const [Photo, setPhoto] = useState("");
+  const [Geocode, setGeocode] = useState("");
 
   const handleFormSubmit = () => {
-    onSubmit(Address);
+    onSubmit(Address, Photo, Geocode);
   };
 
   return (
@@ -27,7 +29,7 @@ const AddNewSpot: React.FC<AddNewSpotProps> = ({ onSubmit }) => {
         placeholder="Enter address"
       />
 
-      {/* <Text>Photo:</Text>
+      <Text>Photo:</Text>
       <TextInput
         value={Photo}
         onChangeText={setPhoto}
@@ -39,11 +41,9 @@ const AddNewSpot: React.FC<AddNewSpotProps> = ({ onSubmit }) => {
         value={Geocode}
         onChangeText={setGeocode}
         placeholder="Enter geocode"
-      /> */}
+      />
 
       <Button title="Submit" onPress={handleFormSubmit} />
     </View>
   );
-};
-
-export default AddNewSpot;
+}
