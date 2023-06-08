@@ -6,6 +6,8 @@ import { calculateDistance } from "./utils/calculateDistance";
 import SurfHeader from "./components/SurfHeader";
 import AddNewSpot from "./components/AddNewSpot";
 import { retrieveAllData } from "./ApiControllerMongo";
+import { createSpot } from "./ApiControllerMongo";
+import { MouseEvent } from "react";
 
 enum Page {
   HOME,
@@ -42,8 +44,6 @@ export default function App() {
         };
       });
 
-      console.log("distances", surfDistances);
-
       let smallestSumElement = null;
       let smallestSum = Infinity;
 
@@ -66,13 +66,18 @@ export default function App() {
     setCurrentPage(Page.FORM);
   };
 
-  const handleNewSpotSubmit = (
-    address: string,
-    photo: string,
-    geocode: string
-  ) => {
-    console.log("New spot submitted:", address, photo, geocode);
-    setCurrentPage(Page.HOME);
+  const handleNewSpotSubmit = async (
+    Address: string
+    // event: MouseEvent<HTMLFormElement>
+  ): Promise<void> => {
+    try {
+      // event.preventDefault();
+      const response = await createSpot(Address);
+      console.log("test post route", response);
+      setCurrentPage(Page.HOME);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const HomePage = () => {

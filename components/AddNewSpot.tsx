@@ -1,41 +1,45 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
+import { MouseEvent } from "react";
 
 interface AddNewSpotProps {
-  onSubmit: (address: string, photo: string, geocode: string) => void;
+  onSubmit: (
+    Address: string
+    // event?: React.MouseEvent<HTMLFormElement> | FormEvent<HTMLFormElement>
+  ) => Promise<void>;
 }
 
 const AddNewSpot: React.FC<AddNewSpotProps> = ({ onSubmit }) => {
-  const [address, setAddress] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [geocode, setGeocode] = useState("");
+  const [Address, setAddress] = useState("");
+  // const [Photo, setPhoto] = useState("");
+  // const [Geocode, setGeocode] = useState("");
 
   const handleFormSubmit = () => {
-    onSubmit(address, photo, geocode);
+    onSubmit(Address);
   };
 
   return (
     <View>
       <Text>Address:</Text>
       <TextInput
-        value={address}
+        value={Address}
         onChangeText={setAddress}
         placeholder="Enter address"
       />
 
-      <Text>Photo:</Text>
+      {/* <Text>Photo:</Text>
       <TextInput
-        value={photo}
+        value={Photo}
         onChangeText={setPhoto}
         placeholder="Enter photo URL"
       />
 
       <Text>Geocode:</Text>
       <TextInput
-        value={geocode}
+        value={Geocode}
         onChangeText={setGeocode}
         placeholder="Enter geocode"
-      />
+      /> */}
 
       <Button title="Submit" onPress={handleFormSubmit} />
     </View>
