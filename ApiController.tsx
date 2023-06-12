@@ -11,9 +11,11 @@ export function retrieveAllData() {
 }
 
 export async function createSpot(
-  Address: string,
+  Destination: string,
   Photo: string,
-  Geocode: string
+  Geocode: string,
+  SurfBreak: string,
+  DifficultyLevel: string
 ) {
   const [longitude, latitude] = Geocode.split(",").map((coord) =>
     parseFloat(coord.trim())
@@ -24,12 +26,14 @@ export async function createSpot(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      Address: Address,
+      Destination: Destination,
       Photo: Photo,
       Location: {
         type: "Point",
         coordinates: [longitude, latitude],
       },
+      SurfBreak: SurfBreak,
+      DifficultyLevel: Number(DifficultyLevel),
     }),
   });
 

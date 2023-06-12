@@ -67,14 +67,22 @@ export default function App() {
   };
 
   const handleNewSpotSubmit = async (
-    Address: string,
+    Destination: string,
     Photo: string,
-    Geocode: string
+    Geocode: string,
+    SurfBreak: string,
+    DifficultyLevel: string
     // event: MouseEvent<HTMLFormElement>
   ): Promise<void> => {
     try {
       // event.preventDefault();
-      const response = await createSpot(Address, Photo, Geocode);
+      const response = await createSpot(
+        Destination,
+        Photo,
+        Geocode,
+        SurfBreak,
+        DifficultyLevel
+      );
       console.log("test post route", response);
       setCurrentPage(Page.HOME);
     } catch (error) {
@@ -101,7 +109,15 @@ export default function App() {
   };
 
   const FormPage = () => {
-    return <AddNewSpot onSubmit={handleNewSpotSubmit} />;
+    return (
+      <>
+        <SurfHeader />
+        <AddNewSpot
+          onSubmit={handleNewSpotSubmit}
+          onClick={() => setCurrentPage(Page.HOME)}
+        />
+      </>
+    );
   };
 
   return (
