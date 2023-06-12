@@ -1,12 +1,13 @@
 import Detail from "./components/Detail";
 import List, { SurfData } from "./components/List";
 import React, { useState } from "react";
-import { Api } from "./ApiController";
-import { convertToCoordinates } from "./utils/convertToCoordinates";
 import { getUserLocation } from "./utils/getLocation";
 import { calculateDistance } from "./utils/calculateDistance";
 import SurfHeader from "./components/SurfHeader";
 import AddNewSpot from "./components/AddNewSpot";
+import { retrieveAllData } from "./ApiController";
+import { createSpot } from "./ApiController";
+import { MouseEvent } from "react";
 
 enum Page {
   HOME,
@@ -17,11 +18,14 @@ export default function App() {
   const [selectedSpot, setSelectedSpot] = useState<SurfData | null>(null);
   const [currentPage, setCurrentPage] = useState<Page>(Page.HOME);
   const changeSelectedSpot = (spot: SurfData) => setSelectedSpot(spot);
-  const fields: SurfData[] = Api();
+  const fields: SurfData[] = retrieveAllData();
 
   const surfItems = fields.map((surfData) => ({
     item: surfData,
-    coordinates: convertToCoordinates(surfData.geoCode),
+    coordinates: {
+      longitude: surfData.Location.coordinates[0],
+      latitude: surfData.Location.coordinates[1],
+    },
   }));
 
   const findNearestSpot = async () => {
@@ -39,8 +43,6 @@ export default function App() {
           item,
         };
       });
-
-      //console.log("distances", surfDistances);
 
       let smallestSumElement = null;
       let smallestSum = Infinity;
@@ -64,13 +66,28 @@ export default function App() {
     setCurrentPage(Page.FORM);
   };
 
-  const handleNewSpotSubmit = (
-    address: string,
-    photo: string,
-    geocode: string
-  ) => {
-    console.log("New spot submitted:", address, photo, geocode);
-    setCurrentPage(Page.HOME)
+  const handleNewSpotSubmit = async (
+    Destination: string,
+    Photo: string,
+    Geocode: string,
+    SurfBreak: string,
+    DifficultyLevel: string
+    // event: MouseEvent<HTMLFormElement>
+  ): Promise<void> => {
+    try {
+      // event.preventDefault();
+      const response = await createSpot(
+        Destination,
+        Photo,
+        Geocode,
+        SurfBreak,
+        DifficultyLevel
+      );
+      console.log("test post route", response);
+      setCurrentPage(Page.HOME);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const HomePage = () => {
@@ -92,7 +109,15 @@ export default function App() {
   };
 
   const FormPage = () => {
-    return <AddNewSpot onSubmit={handleNewSpotSubmit} />;
+    return (
+      <>
+        <SurfHeader />
+        <AddNewSpot
+          onSubmit={handleNewSpotSubmit}
+          onClick={() => setCurrentPage(Page.HOME)}
+        />
+      </>
+    );
   };
 
   return (

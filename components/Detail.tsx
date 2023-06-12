@@ -1,26 +1,14 @@
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { SurfData } from "./List";
-//  import { ConversionUtils } from "turbocommons-ts";
 import { Appbar, Card, Text } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MapView, { Marker, Callout } from "react-native-maps";
-import { ConversionUtils } from "turbocommons-ts";
 
 interface DetailProps {
   item: SurfData;
   onClick: () => void;
 }
-
-const convertToCoordinates = (base64Code: string) => {
-  const geoCodeString = ConversionUtils.base64ToString(base64Code);
-  const longitude = JSON.parse(geoCodeString).o.lng;
-  const latitude = JSON.parse(geoCodeString).o.lat;
-  const longNumber = Number(longitude);
-  const latNumber = Number(latitude);
-  return [longNumber, latNumber];
-};
-
 
 const Detail = ({ item, onClick }: DetailProps) => {
   return (
@@ -31,37 +19,37 @@ const Detail = ({ item, onClick }: DetailProps) => {
       </Appbar.Header>
 
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: item.photos[0].url }} />
+        <Image style={styles.image} source={{ uri: item.Photo }} />
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
             <Text style={styles.title}>
-              {item.destination}
+              {item.Destination}
               {"\n"}
             </Text>
             <Text style={styles.text}>
-              Location : {item["address"]}.{"\n"}
-              Surf break : {item["surfBreak"]}.{"\n"}
-              Difficulty level : {item["difficultyLevel"]}.
+              Location : {item.Address}.{"\n"}
+              Surf break : {item.SurfBreak}.{"\n"}
+              Difficulty level : {item.DifficultyLevel}.
             </Text>
           </Card.Content>
         </Card>
-          <MapView
-            style={styles.map}
-            region={{
-              latitude: convertToCoordinates(item.geoCode)[1],
-              longitude: convertToCoordinates(item.geoCode)[0],
-              latitudeDelta: 20,
-              longitudeDelta: 20,
+        <MapView
+          style={styles.map}
+          region={{
+            latitude: item.Location.coordinates[1],
+            longitude: item.Location.coordinates[0],
+            latitudeDelta: 20,
+            longitudeDelta: 20,
+          }}
+        >
+          <Marker
+            coordinate={{
+              latitude: item.Location.coordinates[1],
+              longitude: item.Location.coordinates[0],
             }}
-          >
-            <Marker
-              coordinate={{
-                latitude: convertToCoordinates(item.geoCode)[1],
-                longitude: convertToCoordinates(item.geoCode)[0],
-              }}
-            />
-          </MapView>
-        </View>
+          />
+        </MapView>
+      </View>
     </SafeAreaProvider>
   );
 };
