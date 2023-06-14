@@ -10,6 +10,7 @@ import {
 import { Appbar, Card } from "react-native-paper";
 import { MouseEvent } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Dropdown from "./Dropdown";
 
 interface AddNewSpotProps {
   onSubmit: (
@@ -24,6 +25,15 @@ interface AddNewSpotProps {
 }
 
 export default function AddNewSpot({ onSubmit, onClick }: AddNewSpotProps) {
+  const options = [
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" },
+  ];
+
+  const handleSelectOption = (option: any) => {
+    console.log("Selected option:", option);
+  };
   const [Destination, setDestination] = useState("");
   const [Photo, setPhoto] = useState("");
   const [Geocode, setGeocode] = useState("");
@@ -40,6 +50,7 @@ export default function AddNewSpot({ onSubmit, onClick }: AddNewSpotProps) {
         <Appbar.BackAction onPress={onClick} />
         <Appbar.Content title="Add new spot" />
       </Appbar.Header>
+      <Dropdown options={options} onSelectOption={handleSelectOption} />
       <View style={styles.container}>
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
